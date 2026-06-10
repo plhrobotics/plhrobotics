@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="PLH Robotics — Proyectos de robótica. Construye tus propios robots con nuestras guías, STL y listas de materiales." />
+  <title>PLH Robotics — Robótica educativa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ══════ NAV ══════ -->
+  <nav id="navbar">
+    <a href="#inicio" class="nav-logo">
+      <img src="images/logo.png" class="nav-logo-icon" alt="Logo">
+      PLH<span>ROBOTICS</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+      <li><a href="#ultimo-video">Video</a></li>
+      <!-- <li><a href="#about">Sobre mí</a></li> -->
+      <li><a href="#contact">Contacto</a></li>
+      <li><a href="#solicitar" class="btn-nav">Solicitar proyecto</a></li>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+          <span class="theme-icon">☀</span>
+        </button>
+      </div>
+    </ul>
+    <div class="hamburger" id="hamburger" aria-label="Menú" role="button">
+      <span></span><span></span><span></span>
+    </div>
+
+  </nav>
+
+
+  <!-- ══════ HERO ══════ -->
+  <section class="hero" id="inicio">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-bg"></div>
+
+    <div class="hero-content">
+      <div class="hero-tag">Robótica · Diseño · Electrónica · Programación</div>
+      <h1>
+        Construye el<br>
+        <span class="accent">futuro</span><br>
+        <span class="dim">un robot a la vez</span>
+      </h1>
+      <p>
+        Proyectos de robótica que puedes replicar desde casa.
+        Documentación técnica, archivos STL y recursos de construcción disponibles.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">Ver proyectos</a>
+        <a href="#contact" class="btn-secondary">Contacto</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number" data-target="2" data-suffix="+">2</div>
+        <div class="stat-label">Proyectos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="3" data-suffix="">3</div>
+        <div class="stat-label">Categorías</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="100" data-suffix="%">100%</div>
+        <div class="stat-label">Diseños Originales</div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════ PROJECTS ══════ -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-tag">Proyectos</div>
+      <h2 class="section-title">Mis últimas <span class="accent">creaciones</span></h2>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filters-bar reveal">
+      <!--
+    <div class="filter-group">
+      <span class="filter-label">Categoría</span>
+      <div class="filter-chips" id="filter-cat">
+        <button class="chip active" data-filter="cat" data-val="todos">Todos</button>
+        <button class="chip" data-filter="cat" data-val="robot-sumo">Robot Sumo</button>
+        <button class="chip" data-filter="cat" data-val="cnc">CNC</button>
+        <button class="chip" data-filter="cat" data-val="brazo">Brazo Robótico</button>
+        <button class="chip" data-filter="cat" data-val="seguidor">Seguidor de Línea</button>
+        <button class="chip" data-filter="cat" data-val="exploracion">Exploración</button>
+      </div>
+    </div>
+-->
+      <div class="filter-group">
+        <span class="filter-label">Dificultad</span>
+        <div class="filter-chips" id="filter-diff">
+          <button class="chip active" data-filter="diff" data-val="todos">Todos</button>
+          <button class="chip" data-filter="diff" data-val="basico">Básico</button>
+          <button class="chip" data-filter="diff" data-val="intermedio">Intermedio</button>
+          <button class="chip" data-filter="diff" data-val="avanzado">Avanzado</button>
+        </div>
+      </div>
+      <!--
+    <div class="filter-group">
+      <span class="filter-label">Costo (USD)</span>
+      <div class="filter-chips" id="filter-cost">
+        <button class="chip active" data-filter="cost" data-val="todos">Todos</button>
+        <button class="chip" data-filter="cost" data-val="bajo">Menos de $50</button>
+        <button class="chip" data-filter="cost" data-val="medio">$50–$150</button>
+        <button class="chip" data-filter="cost" data-val="alto">Más de $150</button>
+      </div>
+    </div>
+-->
+    </div>
+
+    <div class="no-results" id="no-results" style="display:none;">
+      <div class="no-results-icon">🤖</div>
+      <p>Oh vaya... ¿de verdad te crees capaz de construir proyectos avanzados?</p>
+      <p>¿O solo estas aqui por curiosidad?</p>
+      <p>Tranquil@, pronto subiré proyectos realmente complejos para descubrir si tienes el nivel para construirlos.</p>
+      <button class="btn-toggle" id="reset-filters">Limpiar filtros</button>
+    </div>
+
+    <div class="projects-grid" id="projects-grid">
+
+      <a href="projects/robot-mini-sumo--jerrm1.html" class="project-card" data-cat="robot-sumo" data-diff="basico"
+        data-cost="medio">
+        <div class="card-image"><img src="images/minisumo/miniSumo-isometrica.png" alt="Robot Mini Sumo"></div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Arduino Uno</span>
+            <span class="tag">Autonomo</span>
+            <span class="tag">PID</span>
+            
+          </div>
+          <div class="card-title">Robot Mini Sumo - 10x10cm</div>
+          <div class="card-desc">Construye tu propio Robot Mini Sumo Autonomo con Control PID sin PCB.
+          </div>
+          <div class="card-difficulty">
+            <span class="diff-label">Basico</span>
+            <div class="diff-bar">
+              <div class="diff-fill" style="width:30%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cost">DISPONIBLE</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="projects/robot-cartesiano-pik420.html" class="project-card" data-cat="cnc" data-diff="intermedio"
+        data-cost="alto">
+        <div class="card-image"><img src="images/pik420_v1/pik420-isometrica.png" alt="Robot Mini Sumo"></div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">DIY</span>
+            <span class="tag">Plotter</span>
+            <span class="tag">Arduino Unos</span>
+          </div>
+          <div class="card-title">Robot Cartesiano</div>
+          <div class="card-desc">Diseño de un Robot Cartesiano con Impresion 3D.</div>
+          <div class="card-difficulty">
+            <span class="diff-label">Intermedio</span>
+            <div class="diff-bar">
+              <div class="diff-fill" style="width:60%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cost">DISPONIBLE</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+      <!-- -->
+      <!-- <a href="projects/reloj-arcaizante.html" class="project-card" data-cat="brazo" data-diff="basico" -->
+      <a class="project-card" data-cat="brazo" data-diff="basico" data-cost="medio">
+        <div class="card-image-placeholder">⏳</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Reloj</span>
+            <span class="tag">Digital</span>
+            <span class="tag">Arcaizante</span>
+          </div>
+          <div class="card-title">Reloj de Pared - Arcaizante</div>
+          <div class="card-desc">Reloj de pared dijital con estilo
+            arcaizante.</div>
+          <div class="card-difficulty">
+            <span class="diff-label">Básico</span>
+            <div class="diff-bar">
+              <div class="diff-fill" style="width:30%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cost">PROXIMAMENTE</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- <a href="projects/seguidor-linea.html" class="project-card" data-cat="seguidor" data-diff="basico" -->
+      <a class="project-card" data-cat="seguidor" data-diff="intermedio" data-cost="bajo">
+        <div class="card-image-placeholder">🛤️</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Robot Hexapodo</span>
+            <span class="tag">Bluetooth</span>
+          </div>
+          <div class="card-title">Mini Robot Hexapodo</div>
+          <div class="card-desc">Robot hexapodo con 18 grados de libertad.
+          </div>
+          <div class="card-difficulty">
+            <span class="diff-label">Intermedio</span>
+            <div class="diff-bar">
+              <div class="diff-fill" style="width:60%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cost">~PROXIMAMENTE</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- <a href="projects/brazo-robotico.html" class="project-card" data-cat="exploracion" data-diff="intermedio" -->
+      <a class="project-card" data-cat="exploracion" data-diff="intermedio" data-cost="medio">
+        <div class="card-image-placeholder">🔬</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Brazo</span>
+            <span class="tag">Robotico</span>
+          </div>
+          <div class="card-title">Brazo Robotico - 4 DOF</div>
+          <div class="card-desc">Brazo robotico con 4 grados de libertad.</div>
+          <div class="card-difficulty">
+            <span class="diff-label">Intermedio</span>
+            <div class="diff-bar">
+              <div class="diff-fill" style="width:65%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cost">PROXIMAMENTE</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="projects-toggle" id="projects-toggle">
+      <button class="btn-toggle" id="toggle-projects">
+        <span class="toggle-text">Ver más proyectos</span>
+        <span class="toggle-icon">▼</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ══════ ÚLTIMO VIDEO ══════ -->
+  <section id="ultimo-video">
+    <div class="section-header reveal">
+      <div class="section-tag">YouTube</div>
+      <h2 class="section-title">Último <span class="accent">video</span></h2>
+    </div>
+
+    <div class="video-wrap reveal">
+      <div class="video-container">
+        <!--
+        INSTRUCCIONES: Reemplaza VIDEO_ID con el ID de tu video de YouTube.
+        El ID es la parte después de "?v=" en la URL.
+        Ejemplo: https://youtube.com/watch?v=dQw4w9WgXcQ → VIDEO_ID = dQw4w9WgXcQ
+      -->
+        <iframe id="yt-embed" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Último video de PLH Robotics"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">Nuevo video</div>
+        <h3 class="video-title">JERR-1: Construí un Robot Sumo con Inteligencia Artificial</h3>
+        <p class="video-desc">
+          Cómo construí este robot sumo desde cero — los errores, los rediseños, el control PID
+          explicado paso a paso, y cómo le integré un modelo de machine learning para detectar impactos.
+        </p>
+        <a href="https://youtube.com/@edgarplah1487?si=tU-ucgbrg3Q2rc78" target="_blank" rel="noopener"
+          class="btn-secondary" style="display:inline-block;margin-top:1rem;">
+          Ver canal completo →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════ ABOUT ══════ 
+  <section id="about">
+    <div class="about-grid">
+
+      <div class="about-image-wrap reveal">
+        <div class="about-image-placeholder">👤</div>
+        <div class="about-badge">
+          <div class="badge-number">+3</div>
+          <div class="badge-label">Años construyendo</div>
+        </div>
+      </div>
+      
+      <div class="about-content reveal">
+        <div class="section-header">
+          <div class="section-tag">Sobre mí</div>
+          <h2 class="section-title">Hola, soy <span class="accent">Edgar</span></h2>
+        </div>
+        <p>Soy el creador de PLH Robotics. Diseño y construyo robots que combinan mecánica, electrónica e inteligencia
+          artificial — y documento cada proceso para que tú también puedas replicarlos.</p>
+        <p>Comencé en robótica por curiosidad, aprendiendo solo. Hoy cada proyecto que publico es también una guía:
+          comparto los errores, las decisiones técnicas y el razonamiento detrás de cada componente.</p>
+        <p>Actualmente estudio TinyML — machine learning corriendo directamente en microcontroladores.</p>
+        <div class="skills-list">
+          <span class="skill-chip">ESP32</span>
+          <span class="skill-chip">Arduino</span>
+          <span class="skill-chip">TinyML</span>
+          <span class="skill-chip">Control PID</span>
+          <span class="skill-chip">Diseño 3D</span>
+          <span class="skill-chip">KiCad PCB</span>
+          <span class="skill-chip">Edge Impulse</span>
+          <span class="skill-chip">C/C++</span>
+          <span class="skill-chip">Python</span>
+        </div>
+        <a href="#contact" class="btn-primary" style="display:inline-block;">Contáctame</a>
+      </div>
+    </div>
+  </section>
+-->
+
+  <!-- ══════ SOLICITAR ══════ -->
+  <section id="solicitar">
+    <div class="solicitar-wrap reveal">
+      <div class="section-header">
+        <div class="section-tag">Colaboración</div>
+        <h2 class="section-title">¿Tienes una <span class="accent">idea</span>?</h2>
+      </div>
+      <p>Si necesitas un robot personalizado, un prototipo o un proyecto para tu empresa o institución, cuéntame tu
+        idea. Construyo robots a medida y te entrego el proyecto listo.</p>
+      <button class="btn-primary" id="open-modal">Solicitar proyecto →</button>
+    </div>
+  </section>
+
+  <!-- Modal solicitud -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="close-modal">✕</button>
+      <h3>Solicitar un proyecto</h3>
+      <p class="subtitle">Cuéntame tu idea y te contactaré lo antes posible.</p>
+      <form id="project-form" action="https://formspree.io/f/mdaoqnvk" method="POST">
+        <input type="hidden" name="_subject" value="🤖 Nueva solicitud de proyecto — PLH Robotics" />
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+        </div>
+        <div class="form-group">
+          <label for="tipo">Tipo de proyecto</label>
+          <select id="tipo" name="tipo" required>
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="sumo">Robot sumo</option>
+            <option value="seguidor">Seguidor de línea</option>
+            <option value="brazo">Brazo robótico</option>
+            <option value="automatizacion">Automatización</option>
+            <option value="otro">Otro / No sé aún</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="presupuesto">Presupuesto aproximado (USD)</label>
+          <select id="presupuesto" name="presupuesto">
+            <option value="" disabled selected>Selecciona un rango</option>
+            <option value="50-150">$50 – $150</option>
+            <option value="150-400">$150 – $400</option>
+            <option value="400-1000">$400 – $1,000</option>
+            <option value="1000+">$1,000+</option>
+            <option value="nd">No lo tengo definido</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Describe tu idea</label>
+          <textarea id="descripcion" name="descripcion"
+            placeholder="¿Qué quieres que haga el robot? ¿Para qué lo necesitas?" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Enviar solicitud →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="checkmark">✅</div>
+        <h4>¡Solicitud enviada!</h4>
+        <p style="color:var(--text-secondary);font-size:0.85rem;">Gracias por tu interés. Te contactaré en las próximas
+          48 horas.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════ CONTACT ══════ -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-tag">Contacto</div>
+      <h2 class="section-title">Hablemos <span class="accent">juntos</span></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>¿Preguntas o proyectos?</h3>
+        <p>Sígueme en redes para ver mis proyectos en tiempo real, o escríbeme directamente. Respondo todos los
+          mensajes.</p>
+        <div class="contact-links">
+          <a href="https://tiktok.com/@plhrobotics" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-icon"><i class="fa-brands fa-tiktok"></i></div>
+            <span>@plhrobotics en TikTok</span>
+          </a>
+
+          <a href="https://youtube.com/@edgarplah1487?si=tU-ucgbrg3Q2rc78" target="_blank" rel="noopener"
+            class="contact-link">
+            <div class="contact-icon"><i class="fa-brands fa-youtube"></i></div>
+            <span>Edgar Plah en YouTube</span>
+          </a>
+
+          <a href="https://instagram.com/plhrobotics" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
+            <span>@plhrobotics en Instagram</span>
+          </a>
+
+          <a href="mailto:plhrobotics@gmail.com" class="contact-link">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <span>plhrobotics@gmail.com</span>
+          </a>
+          <a href="https://wa.me/528180131136?text=Hola%20PLH%20Robotics,%20me%20interesa%20un%20proyecto"
+            target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-icon">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <span>+52 8180131136</span>
+          </a>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;justify-content:center;gap:1.2rem;">
+        <div class="info-card">
+          <p class="info-card-label">Tiempo de respuesta</p>
+          <p class="info-card-value">≤ 36 hrs</p>
+          <p class="info-card-sub">Respondo todos los mensajes.</p>
+        </div>
+        <div class="info-card">
+          <p class="info-card-label">Ubicación</p>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">México 🇲🇽 — Proyectos remotos disponibles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════ FOOTER ══════ -->
+  <footer>
+    <div class="footer-logo">PLH<span>ROBOTICS</span></div>
+    <div class="footer-copy">© 2026 PLH Robotics. Todos los derechos reservados.</div>
+    <div class="footer-links">
+      <a href="#projects">Proyectos</a>
+      <a href="#about">Sobre mí</a>
+      <a href="#contact">Contacto</a>
+    </div>
+  </footer>
+
+  <!-- Botón flotante TikTok 
+  <a href="https://tiktok.com/@plhrobotics" target="_blank" rel="noopener" class="fab-tiktok" aria-label="TikTok">
+    📱
+  </a>-->
+
+  <!-- ══════ GOOGLE TRANSLATE ══════ -->
+  <div id="google_translate_element" style="display:none;"></div>
+
+  <div class="lang-widget" id="lang-widget">
+    <button class="lang-btn" id="lang-btn" aria-label="Cambiar idioma">
+      🌐 <span id="lang-current">ES</span>
+    </button>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <div class="lang-dropdown-title">Seleccionar idioma</div>
+      <button class="lang-option active" data-lang="es">🇲🇽 Español</button>
+      <button class="lang-option" data-lang="en">🇺🇸 English</button>
+      <button class="lang-option" data-lang="pt">🇧🇷 Português</button>
+      <button class="lang-option" data-lang="fr">🇫🇷 Français</button>
+      <button class="lang-option" data-lang="de">🇩🇪 Deutsch</button>
+      <button class="lang-option" data-lang="ja">🇯🇵 日本語</button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'es',
+        includedLanguages: 'en,pt,fr,de,ja,zh-CN,ko,ar,it',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

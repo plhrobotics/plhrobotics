@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="JERR-M1 — Robot Mini Sumo con Control PID. Construye tu propio robot mini sumo autonomo con control pid sin PCB. STL, lista materiales y guía completa." />
+  <title>JERR-M1 — Robot Mini Sumo | PLH Robotics</title>
+  <link rel="stylesheet" href="../css/project.css" />
+</head>
+
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <a href="../index.html" class="nav-logo">
+      <div class="nav-logo-icon">⬡</div>
+      PLH<span>ROBOTICS</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema"><span
+          class="theme-icon">☀</span></button>
+      <a href="../index.html#projects" class="back-btn">← Todos los proyectos</a>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <div class="project-hero">
+    <div class="project-breadcrumb">
+      <a href="../index.html">Inicio</a> › <a href="../index.html#projects">Proyectos</a> › JERR-M1
+    </div>
+    <div class="project-tags">
+      <span class="tag">Mini Sumo</span>
+      <span class="tag">Autonomo</span>
+      <span class="tag">Control PID</span>
+      <span class="tag">Arduino Uno</span>
+
+    </div>
+    <h1 class="project-title">JERR-M1 — Robot Mini Sumo<br><span class="accent">con PID</span></h1>
+    <div class="project-meta">
+      <span>📅 2026</span>
+      <span>⚖️ Medidas 10x10cm</span>
+      <span>🛠️ Dificultad: Basica</span>
+      <span>💰 No Necesita PCB</span>
+    </div>
+    <a href="https://cults3d.com/plhrobotics/jerr1" target="_blank" rel="noopener" class="download-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+      Descargar STL en Cults3D
+    </a>
+  </div>
+
+  <!-- ══ COVER ══ -->
+  <div class="project-cover">
+
+    <!-- Preview -->
+    <div class="cover-preview" id="cover-preview">
+
+      <img src="../images/minisumo/jerrm1-isometrica.png" alt="Robot JERR-M1">
+
+      <button class="btn-open-3d" id="open-3d-btn">
+
+        Ver modelo 3D
+
+      </button>
+
+    </div>
+
+    <!-- Viewer 3D -->
+    <div class="cover-3d-container" id="cover-3d-container" style="display:none;">
+
+      <button class="btn-close-3d" id="close-3d-btn">
+
+        ← Volver
+
+      </button>
+
+      <model-viewer class="robot-viewer" src="../models/pik420_v1/pik420_v1.glb" alt="Robot JERR-1" camera-controls
+        disable-zoom disable-pan camera-orbit="0deg 75deg 70%" camera-target=".1m -.01m 0m" exposure="0.15"
+        shadow-intensity="0.1" environment-image="legacy" tone-mapping="neutral">
+
+      </model-viewer>
+
+    </div>
+
+
+
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="project-body">
+
+    <main class="project-main">
+
+      <h2>¿Qué es JERR-M1?</h2>
+      <p class="reveal">JERR-M1 ("Jugador Estratégico de Reacción Rápida - version M1") es un robot mini
+        sumo autónomo con medidas 10 x 10 cm. Lo que lo diferencia es la integración de un <strong
+          style="color:var(--cyan)">control PID</strong> de reacción rapida que le permite detectar la
+        al enemigo y no perderlo de vista hasta atacar.</p>
+      <p class="reveal">El proyecto nacio con el proposito de ayudar a la comunidad maker a entender el funcionamiento
+        del control PID aplicado a un robot sumo utilizando 3 sensores VL53L0X ubicados en la parte frontal, ademas,
+        JERR-M1 integra 2 sensores infrarrojos TCRT5000 en la parte inferior para detectar el limite del dohyo.</p>
+      <p class="reveal">JERR-M1 no es un robot para competencias, es un robot para practicar y entender el cobtrol pid.
+      </p>
+
+      <h2>¿Cómo funciona?</h2>
+      <p class="reveal"><strong style="color:var(--text-primary)">1. Detección del enemigo</strong> — Tres sensores ToF
+        cubren el frente. Cada uno genera una bandera (0 o 1) si detecta algo a menos de 1 metro. La combinación le dice
+        al robot si el enemigo está a la derecha, al frente o a la izquierda.</p>
+      <p class="reveal"><strong style="color:var(--text-primary)">2. Control PID</strong> — Centra al enemigo frente al
+        robot y ataca a la velocidad correcta. Kp controla la agresividad, Kd amortigua oscilaciones. Ki se mantiene en
+        cero para no perder velocidad.</p>
+      <p class="reveal"><strong style="color:var(--text-primary)">3. Detección del limite del Dohyo</strong> — El
+        TCRT5000 envia una señal digital a un pin del Arduino Uno cuando detecta un cambio de color del ring.</p>
+
+      <h2>Galería</h2>
+      <div class="gallery reveal">
+        <div class="gallery-placeholder"><img src="../images/minisumo/jerrm1-1.jpg" alt="Robot Mini Sumo"></div>
+        <div class="gallery-placeholder"><img src="../images/minisumo/jerrm1-2.jpg" alt="Robot Mini Sumo"></div>
+        <div class="gallery-placeholder"><img src="../images/minisumo/jerrm1-3.jpg" alt="Robot Mini Sumo"></div>
+        <div class="gallery-placeholder"><img src="../images/minisumo/jerrm1-4.jpg" alt="Robot Mini Sumo"></div>
+      </div>
+
+      <!-- ══ MATERIALES + SPECS ══ -->
+      <div class="inline-cards reveal">
+
+        <!-- LISTA DE MATERIALES CON LINKS DE COMPRA
+           Estructura de cada componente:
+           - material-name: nombre del componente
+           - material-qty: cantidad
+           - buy-links: contenedor de botones de compra (puedes poner 1, 2 o 3)
+           Para agregar/cambiar links: edita los href="URL_AQUI"
+           Para agregar una tienda más: copia un <a class="buy-link"> y pégalo
+      -->
+        <div class="inline-card">
+          <h2>Lista de materiales</h2>
+          <ul class="materials-list">
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Arduino Uno</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">UnitElectronics</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Micro Motorreductor GA12-N20 6V Reduccion 150-1</span>
+                <span class="material-qty">× 2</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">UnitElectronics</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Ruedas para Motorreductor N20 de 43x19mm</span>
+                <span class="material-qty">× 2</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">UnitElectronics</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Puente H L298N</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">UnitElectronics</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Sensor IR TCRT5000</span>
+                <span class="material-qty">× 2</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">AliExpress</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">MPU6050</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">AliExpress</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Batería LiPo 3S 1300mAh</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">AliExpress</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Reductor LM2596</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">AliExpress</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Filamento TPU (ruedas)</span>
+                <span class="material-qty">~50 g</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">Amazon</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Filamento PLA (chasis)</span>
+                <span class="material-qty">~180 g</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">Amazon</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">Tornillos M3</span>
+                <span class="material-qty">~20 pzas</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+              </div>
+            </li>
+
+            <li>
+              <div class="material-info">
+                <span class="material-name">LED RGB (demo IA)</span>
+                <span class="material-qty">× 1</span>
+              </div>
+              <div class="buy-links">
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">MercadoLibre</a>
+                <a class="buy-link" href="URL_AQUI" target="_blank" rel="noopener">AliExpress</a>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="inline-card">
+          <h2>Especificaciones</h2>
+          <ul class="specs-list">
+            <li><span class="spec-key">Peso</span><span class="spec-val">~950 g</span></li>
+            <li><span class="spec-key">Categoría</span><span class="spec-val">1 kg</span></li>
+            <li><span class="spec-key">Microcontrolador</span><span class="spec-val">ESP32</span></li>
+            <li><span class="spec-key">Voltaje</span><span class="spec-val">11.1 V (3S)</span></li>
+            <li><span class="spec-key">Torque/motor</span><span class="spec-val">0.25 Nm</span></li>
+            <li><span class="spec-key">Modelo IA</span><span class="spec-val">Edge Impulse</span></li>
+            <li><span class="spec-key">Dificultad</span><span class="spec-val">Intermedia</span></li>
+            <li><span class="spec-key">Costo aprox.</span><span class="spec-val">~$70 USD</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <h2>Proceso de construcción</h2>
+      <p class="reveal">El diseño pasó por <strong style="color:var(--cyan)">tres versiones</strong>. La primera sin
+        cuña ni agarre. La segunda mejor, pero con tornillos en la cuña y el interruptor en la parte trasera — un golpe
+        fuerte podía apagarlo en combate. JERR-1 corrige todos esos errores.</p>
+
+      <h2>Resultados de la IA</h2>
+      <p class="reveal">El modelo fue entrenado con el robot quieto. Detecta impactos correctamente en reposo, pero en
+        competencia real el movimiento constante genera ruido que dificulta la clasificación. <strong
+          style="color:var(--cyan)">Conclusión honesta:</strong> funciona y es prometedor, pero necesitas entrenar el
+        modelo en condiciones de movimiento real para que sea competitivo.</p>
+
+      <!-- ══ ACTUALIZACIONES ══
+      <h2>Actualizaciones</h2>
+      <div class="updates-list reveal">
+        <div class="update-item">
+          <div class="update-dot"></div>
+          <div class="update-content">
+            <div class="update-date">15 mayo 2025</div>
+            <div class="update-title">Lanzamiento inicial</div>
+            <p class="update-desc">Primera versión pública. Se incluyen todos los STL, lista de materiales y código
+              base.</p>
+          </div>
+        </div>
+        <div class="update-item">
+          <div class="update-dot"></div>
+          <div class="update-content">
+            <div class="update-date">20 mayo 2025</div>
+            <div class="update-title">Mejora en el soporte de motores</div>
+            <p class="update-desc">Se rediseñó el soporte de motores para mayor rigidez. STL actualizado disponible en
+              Cults3D.</p>
+          </div>
+        </div>
+        <div class="update-item update-item--latest">
+          <div class="update-dot"></div>
+          <div class="update-content">
+            <div class="update-date">1 junio 2025 <span class="update-badge">Reciente</span></div>
+            <div class="update-title">Código del modelo IA optimizado</div>
+            <p class="update-desc">Se redujo el tiempo de inferencia de 45 ms a 18 ms. Archivo .ino actualizado en
+              GitHub.</p>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- ══ FAQ ══ -->
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-question">¿Necesito una impresora 3D específica?<span class="faq-icon">+</span></button>
+          <div class="faq-answer">
+            <p>No. Cualquier impresora FDM con cama de al menos 20×20 cm funciona. Las ruedas requieren filamento TPU;
+              el chasis puede imprimirse en PLA o PETG.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Puedo usar Arduino Uno en lugar del ESP32?<span
+              class="faq-icon">+</span></button>
+          <div class="faq-answer">
+            <p>Para la parte básica (PID + sensores) sí. Pero el Arduino Uno no puede ejecutar el modelo de TinyML —
+              para eso necesitas el ESP32 o un Arduino Nano 33 BLE Sense.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Dónde consigo la batería LiPo?<span class="faq-icon">+</span></button>
+          <div class="faq-answer">
+            <p>En la lista de materiales de arriba tienes links directos. Busca "LiPo 3S 1300mAh 35C". Asegúrate de
+              comprar también un cargador balanceador compatible.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿El modelo de IA ya viene entrenado?<span class="faq-icon">+</span></button>
+          <div class="faq-answer">
+            <p>Sí, incluyo el modelo como librería C++ lista para usar. Si quieres mejores resultados, puedes
+              reentrenarlo con tus propios datos en Edge Impulse — el proceso está en el video.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Cuánto tiempo toma construirlo?<span class="faq-icon">+</span></button>
+          <div class="faq-answer">
+            <p>Con materiales en mano: 2 a 4 fines de semana. El chasis tarda ~14 horas de impresión. Si pides
+              componentes de China, suma el tiempo de envío.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ COMUNIDAD ══ -->
+      <h2>Comunidad — ¿Lo construiste?</h2>
+      <div class="community-section reveal">
+
+        <div class="community-header">
+          <p>Si construiste tu versión de JERR-M1, comparte una foto. La reviso y la publico aquí para que todos la vean.
+          </p>
+          <button class="btn-community-submit" id="open-community-modal">
+            📷 Compartir mi construcción
+          </button>
+        </div>
+
+        <!--
+        ═══════════════════════════════════════════
+        PARA AGREGAR UNA CONSTRUCCIÓN APROBADA:
+        Copia este bloque dentro de .community-grid-static
+
+        <div class="community-card">
+          <img class="community-img" src="../images/comunidad/foto.jpg" alt="Robot de @usuario">
+          <div class="community-info">
+            <span class="community-name">@usuario</span>
+            <span class="community-loc">📍 Ciudad, País</span>
+            <p class="community-comment">"Comentario."</p>
+          </div>
+        </div>
+
+        PARA ELIMINAR: borra ese bloque completo.
+        ═══════════════════════════════════════════
+      -->
+        <div class="community-grid">
+          <div class="community-grid-static">
+            <!-- Publicaciones aprobadas van aquí -->
+
+          </div>
+          <div class="community-card community-card--cta" id="community-cta-card">
+            <div class="community-cta-icon">+</div>
+            <p>Tu construcción<br>podría aparecer aquí</p>
+            <button class="btn-community-submit-sm" id="open-community-modal-2">Compartir →</button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="project-sidebar">
+      <div class="sidebar-card reveal">
+        <h3>Descargar archivos</h3>
+        <a href="https://cults3d.com/plhrobotics/jerr1" target="_blank" rel="noopener" class="download-cta"
+          style="width:100%;justify-content:center;font-size:0.62rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          STL en Cults3D
+        </a>
+        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:0.8rem;text-align:center;">Todas las piezas
+          imprimibles incluidas.</p>
+        <div class="kit-divider">o</div>
+        <a href="https://wa.me/528180131136?text=Hola%20Edgar%2C%20quiero%20solicitar%20el%20kit%20de%20JERR-1%20%F0%9F%A4%96"
+          target="_blank" rel="noopener" class="btn-kit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.118 1.528 5.845L.057 23.571a.5.5 0 0 0 .612.612l5.726-1.471A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.535-5.197-1.462l-.372-.23-3.862.992.992-3.862-.23-.372A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+          </svg>
+          Solicitar kit completo
+        </a>
+        <p class="kit-note">🇲🇽 Solo aplica para México.<br>Te contactaré por WhatsApp para coordinar.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ══ CTA INFERIOR ══ 
+  <div class="project-download-bottom">
+    <h3>¿Listo para construirlo?</h3>
+    <p>Descarga los STL y sigue la guía. Si tienes dudas, escríbeme en TikTok.</p>
+    <a href="https://cults3d.com/plhrobotics/jerr1" target="_blank" rel="noopener" class="download-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+      Descargar STL en Cults3D
+    </a>
+  </div>-->
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">PLH<span>ROBOTICS</span></div>
+    <div class="footer-copy">© 2025 PLH Robotics. Todos los derechos reservados.</div>
+  </footer>
+
+  <!-- ══ LIGHTBOX ══ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="Imagen ampliada" />
+  </div>
+
+  <!-- ══ MODAL COMUNIDAD ══ -->
+  <div class="modal-overlay" id="community-modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="close-community-modal">✕</button>
+      <h3>Compartir mi construcción</h3>
+      <p class="subtitle">Cuéntame cómo te quedó. Reviso tu envío y te aviso por correo cuando se publique.</p>
+
+      <form id="community-form">
+        <div class="form-group">
+          <label for="c-name">Nombre o usuario</label>
+          <input type="text" id="c-name" placeholder="@tunombre o nombre real" required />
+        </div>
+        <div class="form-group">
+          <label for="c-location">Ciudad / País</label>
+          <input type="text" id="c-location" placeholder="Ej. Monterrey, México" />
+        </div>
+        <div class="form-group">
+          <label for="c-comment">Cuéntanos tu experiencia</label>
+          <textarea id="c-comment" placeholder="¿Qué modificaste? ¿Cómo te fue? ¿Algún consejo?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="c-email">Correo electrónico</label>
+          <input type="email" id="c-email" placeholder="tu@correo.com" required />
+        </div>
+        <div class="form-group">
+          <label>Foto de tu robot</label>
+          <div class="file-drop" id="file-drop">
+            <span class="file-drop-icon">📷</span>
+            <p>Arrastra tu foto aquí o <span id="file-trigger">haz clic para seleccionar</span></p>
+            <p style="font-size:0.72rem;color:var(--text-dim);margin-top:4px;">JPG o PNG · Máx. 5 MB</p>
+            <input type="file" id="c-photo" accept="image/jpeg,image/png" style="display:none;" />
+          </div>
+          <div class="file-preview" id="file-preview" style="display:none;">
+            <img id="preview-img" src="" alt="Preview" />
+            <button type="button" id="file-remove">✕ Quitar foto</button>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="community-submit-btn" style="width:100%;justify-content:center;">
+          Enviar →
+        </button>
+        <p style="font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:0.8rem;">
+          Te avisaré por correo cuando tu construcción se publique.
+        </p>
+      </form>
+
+      <div class="form-success" id="community-success" style="display:none;">
+        <div class="checkmark">🤖</div>
+        <h4>¡Enviado!</h4>
+        <p style="color:var(--text-secondary);font-size:0.85rem;">Gracias por construirlo. Reviso tu envío y te aviso al
+          correo cuando aparezca en la página.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LANG WIDGET ══ -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <div class="lang-widget" id="lang-widget">
+    <button class="lang-btn" id="lang-btn" aria-label="Cambiar idioma">
+      🌐 <span id="lang-current">ES</span>
+    </button>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <div class="lang-dropdown-title">Seleccionar idioma</div>
+      <button class="lang-option active" data-lang="es">🇲🇽 Español</button>
+      <button class="lang-option" data-lang="en">🇺🇸 English</button>
+      <button class="lang-option" data-lang="pt">🇧🇷 Português</button>
+      <button class="lang-option" data-lang="fr">🇫🇷 Français</button>
+      <button class="lang-option" data-lang="de">🇩🇪 Deutsch</button>
+      <button class="lang-option" data-lang="ja">🇯🇵 日本語</button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'es',
+        includedLanguages: 'en,pt,fr,de,ja,zh-CN,ko,ar,it',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script src="../js/project.js"></script>
+</body>
+
+</html>

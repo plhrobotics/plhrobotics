@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Página no encontrada | PLH Robotics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:    #050810;
+      --cyan:  #00d4ff;
+      --blue:  #1a4fd8;
+      --text:  #e8f0ff;
+      --dim:   #4a6080;
+      --font-display: 'Orbitron', monospace;
+      --font-body:    'Exo 2', sans-serif;
+    }
+    [data-theme="light"] {
+      --bg:   #f0f4ff;
+      --text: #0a1628;
+      --dim:  #6b88b0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,79,216,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,79,216,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    /* Big 404 */
+    .code-404 {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -4px;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--blue);
+      position: relative;
+      margin-bottom: 0.5rem;
+      animation: glitch 4s infinite;
+    }
+
+    .code-404::before,
+    .code-404::after {
+      content: '404';
+      position: absolute;
+      inset: 0;
+      font-family: var(--font-display);
+      font-weight: 900;
+      color: transparent;
+    }
+    .code-404::before {
+      -webkit-text-stroke: 2px var(--cyan);
+      left: 3px; top: -2px;
+      clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+      animation: glitchTop 4s infinite;
+    }
+    .code-404::after {
+      -webkit-text-stroke: 2px #ff4466;
+      left: -3px; top: 2px;
+      clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+      animation: glitchBot 4s infinite;
+    }
+
+    .robot-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .tag {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    p {
+      color: var(--dim);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-home {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      padding: 13px 28px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 20px rgba(26,79,216,0.4);
+    }
+    .btn-home:hover { background: #2d6ff5; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,79,216,0.6); }
+
+    .btn-back {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(77,143,255,0.4);
+      border-radius: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-back:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,0.06); }
+
+    /* Terminal blink */
+    .terminal-line {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-top: 2.5rem;
+      opacity: 0.6;
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: var(--cyan);
+      vertical-align: middle;
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 1.2rem; right: 1.5rem;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(45,111,245,0.3);
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--dim);
+      font-size: 1rem;
+      z-index: 10;
+      transition: 0.3s;
+    }
+    .theme-toggle:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0; }
+    }
+    @keyframes glitch {
+      0%,90%,100% { transform: translate(0); }
+      92%  { transform: translate(-2px, 1px); }
+      94%  { transform: translate(2px, -1px); }
+      96%  { transform: translate(-1px, 2px); }
+    }
+    @keyframes glitchTop {
+      0%,90%,100% { transform: translate(0); opacity: 0; }
+      91%,95% { opacity: 1; }
+      92% { transform: translate(3px, 0); }
+      94% { transform: translate(-3px, 0); }
+    }
+    @keyframes glitchBot {
+      0%,90%,100% { transform: translate(0); opacity: 0; }
+      91%,95% { opacity: 1; }
+      92% { transform: translate(-3px, 0); }
+      94% { transform: translate(3px, 0); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<button class="theme-toggle" id="theme-toggle">☀</button>
+
+<div class="content">
+  <span class="robot-icon">🤖</span>
+  <div class="tag">Error del sistema</div>
+  <div class="code-404">404</div>
+  <h1>Página no encontrada</h1>
+  <p>
+    Puede que la URL esté mal escrita o que el contenido haya sido movido.
+  </p>
+  <div class="btns">
+    <a href="index.html" class="btn-home">← Volver al inicio</a>
+    <a href="index.html#projects" class="btn-back">Ver proyectos</a>
+  </div>
+  <div class="terminal-line">
+    PLH_ROBOTICS://error_404 <span class="cursor"></span>
+  </div>
+</div>
+
+<script>
+  // Tema
+  const html = document.documentElement;
+  const btn  = document.getElementById('theme-toggle');
+  const saved = localStorage.getItem('plh-theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀' : '🌙';
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('plh-theme', next);
+    btn.textContent = next === 'dark' ? '☀' : '🌙';
+  });
+
+  // Canvas nodos
+  const canvas = document.getElementById('c');
+  const ctx    = canvas.getContext('2d');
+  let W, H, nodes;
+  const N = 40, D = 130;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    nodes = Array.from({ length: N }, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+    }));
+  }
+
+  function loop() {
+    ctx.clearRect(0,0,W,H);
+    const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const nc = dark ? 'rgba(45,111,245,' : 'rgba(26,79,216,';
+    const lc = dark ? 'rgba(0,212,255,'  : 'rgba(0,153,204,';
+
+    for (let i=0; i<N; i++) {
+      const a=nodes[i];
+      a.x+=a.vx; a.y+=a.vy;
+      if(a.x<0||a.x>W) a.vx*=-1;
+      if(a.y<0||a.y>H) a.vy*=-1;
+      for(let j=i+1;j<N;j++){
+        const b=nodes[j], d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<D){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle=lc+(1-d/D)*.4+')'; ctx.lineWidth=.5; ctx.stroke(); }
+      }
+      ctx.beginPath(); ctx.arc(a.x,a.y,1.2,0,Math.PI*2); ctx.fillStyle=nc+'.6)'; ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  }
+  resize();
+  loop();
+  window.addEventListener('resize', resize);
+</script>
+</body>
+</html>
